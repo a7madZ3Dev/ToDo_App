@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 // button
 Widget defaultButton({
   double width = double.infinity,
-  Color background = Colors.blue,
+  Color? background = Colors.blue,
   bool isUpperCase = true,
   double radius = 5.0,
-  @required Function function,
-  @required String text,
+  required VoidCallback function,
+  required String text,
 }) =>
     Container(
       width: width,
@@ -32,21 +32,21 @@ Widget defaultButton({
 
 // form field
 Widget defaultFormField({
-  @required TextEditingController controller,
-  @required TextInputType type,
-  Function onSubmit,
-  Function onChange,
-  Function onTap,
+  required TextEditingController controller,
+  required TextInputType type,
+  void Function(String value)? onSubmit,
+  void Function(String value)? onChange,
+  VoidCallback? onTap,
   bool isPassword = false,
-  @required Function validate,
-  @required String label,
-  @required IconData prefix,
-  IconData suffix,
-  Function suffixPressed,
+  required String? Function(String? value) validate,
+  required String label,
+  required IconData prefix,
+  IconData? suffix,
+  VoidCallback? suffixPressed, 
   bool isClickable = true,
   bool readOnly = false,
   bool showCursor = false,
-  FocusNode focusNodeField,
+  FocusNode? focusNodeField,
   TextInputAction textInputAction = TextInputAction.next,
 }) =>
     TextFormField(
@@ -85,17 +85,17 @@ class SingleTaskItem extends StatelessWidget {
   final String title;
   final String time;
   final String date;
-  final Function doneFunction;
-  final Function archiveFunction;
-  final Function deleteFunction;
+  final VoidCallback? doneFunction;
+  final VoidCallback? archiveFunction;
+  final VoidCallback? deleteFunction;
   final bool isShowArchive;
   final bool isShowDone;
   const SingleTaskItem({
-    Key key,
-    @required this.id,
-    @required this.title,
-    @required this.date,
-    @required this.time,
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.date,
+    required this.time,
     this.isShowDone = true,
     this.isShowArchive = true,
     this.doneFunction,
@@ -173,8 +173,8 @@ class SingleTaskItem extends StatelessWidget {
       },
       onDismissed: (direction) {
         direction == DismissDirection.endToStart
-            ? archiveFunction()
-            : doneFunction();
+            ? archiveFunction!()
+            : doneFunction!();
       },
       child: Container(
         padding: EdgeInsets.all(6),
@@ -241,7 +241,7 @@ class SingleTaskItem extends StatelessWidget {
 // no items yet in UI
 class NoTasks extends StatelessWidget {
   const NoTasks({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

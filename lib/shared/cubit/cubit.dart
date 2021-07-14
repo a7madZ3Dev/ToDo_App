@@ -35,19 +35,19 @@ class AppCubit extends Cubit<AppStates> {
   List<Map<String, Object>> doneTasks = [];
   List<Map<String, Object>> archivedTasks = [];
 
-  // change number for pages
+  /// change number for pages
   void changeIndex(int index) {
     selectedPageIndex = index;
     emit(AppChangeBottomNavBarState());
   }
 
-  // change state for floatingActionButton
+  /// change state for floatingActionButton
   void changeFloatingActionButtonState(bool state) {
     isBottomSheetShown = state;
     emit(AppChangeFloatingActionButtonState());
   }
 
-  // operation (get) in the dataBase
+  /// operation (get) in the dataBase
   void getFromDataBase() {
     newTasks = [];
     doneTasks = [];
@@ -57,19 +57,19 @@ class AppCubit extends Cubit<AppStates> {
     DBHelper().getTasks().then((value) {
       value.forEach((element) {
         if (element['status'] == '$kStatusNew')
-          newTasks.add(element);
+          newTasks.add(element as Map<String, Object>);
         else if (element['status'] == '$kStatusDone')
-          doneTasks.add(element);
+          doneTasks.add(element as Map<String, Object>);
         else
-          archivedTasks.add(element);
+          archivedTasks.add(element as Map<String, Object>);
       });
 
       emit(AppGetDatabaseState());
     });
   }
 
-  // operation (add) in the dataBase
-  void addTask({Map<String, Object> map}) {
+  /// operation (add) in the dataBase
+  void addTask({required Map<String, Object> map}) {
     DBHelper().insertTasks(map).then((value) {
       print('inserted successfully');
       emit(AppInsertDatabaseState());
@@ -79,7 +79,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  // operation (delete) in the dataBase
+  /// operation (delete) in the dataBase
   void deleteTask(int id) {
     DBHelper().deleteTasks(id).then((value) {
       print('deleted done with successfully');
@@ -88,13 +88,13 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  // operation (update) in the dataBase
-  void updateTask({Map<String, Object> map, String status}) {
+  /// operation (update) in the dataBase
+  void updateTask({required Map<String, Object> map, required String status}) {
     Map<String, Object> updateMap = {
-      '$kIdColumn': map['$kIdColumn'],
-      '$kTitleColumn': map['$kTitleColumn'],
-      '$kDateColumn': map['$kDateColumn'],
-      '$kTimeColumn': map['$kTimeColumn'],
+      '$kIdColumn': map['$kIdColumn']!,
+      '$kTitleColumn': map['$kTitleColumn']!,
+      '$kDateColumn': map['$kDateColumn']!,
+      '$kTimeColumn': map['$kTimeColumn']!,
       '$kStatusColumn': status
     };
     DBHelper().updateTasks(updateMap).then((value) {

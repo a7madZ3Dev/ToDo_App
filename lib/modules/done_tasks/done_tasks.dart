@@ -8,7 +8,7 @@ import '../../shared/components/constants.dart';
 import '../../shared/components/components.dart';
 
 class DoneTasks extends StatelessWidget {
-  const DoneTasks({Key key}) : super(key: key);
+  const DoneTasks({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class DoneTasks extends StatelessWidget {
               child: ListView.separated(
                 itemCount: appCubit.doneTasks.length,
                 itemBuilder: (context, index) => SingleTaskItem(
-                  id: appCubit.doneTasks[index]['id'],
-                  time: appCubit.doneTasks[index]['time'],
-                  title: appCubit.doneTasks[index]['title'],
-                  date: appCubit.doneTasks[index]['date'],
+                  id: appCubit.doneTasks[index]['id'] as int,
+                  time: appCubit.doneTasks[index]['time'] as String,
+                  title: appCubit.doneTasks[index]['title'] as String,
+                  date: appCubit.doneTasks[index]['date'] as String,
                   archiveFunction: () => appCubit.updateTask(
                       map: appCubit.doneTasks[index], status: kStatusArchive),
-                  deleteFunction: () =>
-                      appCubit.deleteTask(appCubit.doneTasks[index]['id']),
+                  deleteFunction: () => appCubit
+                      .deleteTask(appCubit.doneTasks[index]['id'] as int),
                   isShowDone: false,
                 ),
                 separatorBuilder: (context, index) => Container(

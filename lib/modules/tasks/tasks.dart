@@ -21,16 +21,16 @@ class Tasks extends StatelessWidget {
               child: ListView.separated(
                 itemCount: appCubit.newTasks.length,
                 itemBuilder: (context, index) => SingleTaskItem(
-                  id: appCubit.newTasks[index]['id'],
-                  time: appCubit.newTasks[index]['time'],
-                  title: appCubit.newTasks[index]['title'],
-                  date: appCubit.newTasks[index]['date'],
+                  id: appCubit.newTasks[index]['id'] as int,
+                  time: appCubit.newTasks[index]['time'] as String,
+                  title: appCubit.newTasks[index]['title'] as String,
+                  date: appCubit.newTasks[index]['date'] as String,
                   doneFunction: () => appCubit.updateTask(
                       map: appCubit.newTasks[index], status: kStatusDone),
                   archiveFunction: () => appCubit.updateTask(
                       map: appCubit.newTasks[index], status: kStatusArchive),
-                  deleteFunction: () =>
-                      appCubit.deleteTask(appCubit.newTasks[index]['id']),
+                  deleteFunction: () => appCubit
+                      .deleteTask(appCubit.newTasks[index]['id'] as int),
                 ),
                 separatorBuilder: (context, index) => Container(
                   height: 1.0,

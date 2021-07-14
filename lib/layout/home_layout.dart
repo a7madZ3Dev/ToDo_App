@@ -15,10 +15,10 @@ class Home extends StatelessWidget {
   final timeController = TextEditingController();
   final dateController = TextEditingController();
 
-  // when submit button
+  /// when submit button
   void submitFunction(BuildContext context) {
-    if (formKey.currentState.validate()) {
-      AppCubit.get(context).addTask(map:{
+    if (formKey.currentState!.validate()) {
+      AppCubit.get(context).addTask(map: {
         '$kTitleColumn': titleController.text,
         '$kTimeColumn': timeController.text,
         '$kDateColumn': dateController.text,
@@ -39,13 +39,17 @@ class Home extends StatelessWidget {
     }
   }
 
-  // create form fields for input information
+  /// create form fields for input information
   void _addTask(BuildContext context) {
-    scaffoldKey.currentState
+    scaffoldKey.currentState!
         .showBottomSheet(
           (context) => WillPopScope(
-            onWillPop: () {
-              return;
+            onWillPop: () async {
+              AppCubit.get(context).changeFloatingActionButtonState(false);
+              timeController.clear();
+              dateController.clear();
+              titleController.clear();
+              return true;
             },
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -63,11 +67,10 @@ class Home extends StatelessWidget {
                     defaultFormField(
                       controller: titleController,
                       type: TextInputType.text,
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'title must not be empty';
                         }
-                        return null;
                       },
                       label: 'Task Title',
                       prefix: Icons.title,
@@ -78,11 +81,10 @@ class Home extends StatelessWidget {
                     defaultFormField(
                         controller: dateController,
                         type: TextInputType.datetime,
-                        validate: (String value) {
-                          if (value.isEmpty) {
+                        validate: (String? value) {
+                          if (value!.trim().isEmpty) {
                             return 'date must not be empty';
                           }
-                          return null;
                         },
                         onTap: () async {
                           showDatePicker(
@@ -106,13 +108,12 @@ class Home extends StatelessWidget {
                     defaultFormField(
                       controller: timeController,
                       type: TextInputType.datetime,
-                      validate: (String value) {
-                        if (value.isEmpty) {
+                      validate: (String? value) {
+                        if (value!.trim().isEmpty) {
                           return 'time must not be empty';
                         }
-                        return null;
                       },
-                      textInputAction: null,
+                      textInputAction: TextInputAction.done,
                       onSubmit: (_) {
                         return submitFunction(context);
                       },
@@ -166,13 +167,14 @@ class Home extends StatelessWidget {
         return Scaffold(
           key: scaffoldKey,
           appBar: AppBar(
-            title: Text(appCubit.pages[appCubit.selectedPageIndex]['title']),
+            title: Text(
+                appCubit.pages[appCubit.selectedPageIndex]['title'] as String),
             automaticallyImplyLeading: false,
           ),
           body: ConditionalBuilder(
             condition: state is! AppGetDatabaseLoadingState,
             builder: (context) =>
-                appCubit.pages[appCubit.selectedPageIndex]['page'],
+                appCubit.pages[appCubit.selectedPageIndex]['page'] as Widget,
             fallback: (context) => Center(child: CircularProgressIndicator()),
           ),
           bottomNavigationBar: BottomNavigationBar(
