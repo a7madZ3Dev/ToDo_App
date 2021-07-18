@@ -31,7 +31,7 @@ class Counter extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      CounterCubit.get(context).minus();
+                     BlocProvider.of<CounterCubit>(context).minus();
                     },
                     child: const Text(
                       'MINUS',
