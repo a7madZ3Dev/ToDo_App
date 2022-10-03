@@ -10,7 +10,7 @@ import './shared/bloc_observer.dart';
 void main() {
   Bloc.observer = MyBlocObserver();
   runApp(MyApp());
-} 
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -20,8 +20,18 @@ class MyApp extends StatelessWidget {
       title: 'ToDo App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.purple,
-        accentColor: Colors.amber[600],
+        appBarTheme: AppBarTheme(backgroundColor: Colors.purple),
+        primarySwatch: Colors.purple,
+        colorScheme:
+            ColorScheme.fromSwatch().copyWith(secondary: Colors.amber[600]),
+        inputDecorationTheme: const InputDecorationTheme(
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(width: 3, color: Colors.purple)),
+          floatingLabelStyle: TextStyle(color: Colors.purple),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.amber[600],
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Home(),

@@ -5,7 +5,7 @@ class AppInitialState extends AppStates {}
 class AppChangeBottomNavBarState extends AppStates {}
 
 class AppChangeFloatingActionButtonState extends AppStates {}
-
+ 
 class AppGetDatabaseLoadingState extends AppStates {}
 
 class AppGetDatabaseState extends AppStates {}

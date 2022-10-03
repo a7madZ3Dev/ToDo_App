@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:conditional_builder/conditional_builder.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 
 import '../../shared/cubit/cubit.dart';
 import '../../shared/cubit/states.dart';
@@ -16,7 +16,7 @@ class Tasks extends StatelessWidget {
         builder: (context, state) {
           return ConditionalBuilder(
             condition: appCubit.newTasks.length > 0,
-            fallback: (context) => NoTasks(),
+            fallback: (context) => NoTasks(text: 'Tasks',),
             builder: (context) => Container(
               child: ListView.separated(
                 itemCount: appCubit.newTasks.length,

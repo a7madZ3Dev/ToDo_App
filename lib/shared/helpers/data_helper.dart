@@ -12,8 +12,8 @@ class DBHelper {
         onCreate: (db, version) {
       return db
           .execute(
-              'CREATE TABLE if not exists $kTableName(id INTEGER PRIMARY KEY, $kTitleColumn TEXT, $kDateColumn TEXT, $kTimeColumn TEXT, $kStatusColumn TEXT)')
-          .then((value) => print('dataBase & Tasks table created'));
+              'CREATE TABLE IF NOT EXISTS $kTableName(id INTEGER PRIMARY KEY, $kTitleColumn TEXT, $kDateColumn TEXT, $kTimeColumn TEXT, $kStatusColumn TEXT)')
+          .then((value) => print('DataBase & Tasks table created'));
     });
   }
 

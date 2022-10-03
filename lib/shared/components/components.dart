@@ -42,12 +42,13 @@ Widget defaultFormField({
   required String label,
   required IconData prefix,
   IconData? suffix,
-  VoidCallback? suffixPressed, 
+  VoidCallback? suffixPressed,
   bool isClickable = true,
   bool readOnly = false,
-  bool showCursor = false,
+  bool showCursor = true,
   FocusNode? focusNodeField,
   TextInputAction textInputAction = TextInputAction.next,
+  BuildContext? context,
 }) =>
     TextFormField(
       controller: controller,
@@ -66,6 +67,7 @@ Widget defaultFormField({
         labelText: label,
         prefixIcon: Icon(
           prefix,
+          color: Theme.of(context!).colorScheme.secondary,
         ),
         suffixIcon: suffix != null
             ? IconButton(
@@ -109,7 +111,7 @@ class SingleTaskItem extends StatelessWidget {
       key: ValueKey(id),
       background: Container(
         width: 40,
-        color: Colors.green,
+        color: Colors.green[400],
         child: Icon(
           Icons.check_circle_outline_rounded,
           color: Colors.white,
@@ -124,7 +126,7 @@ class SingleTaskItem extends StatelessWidget {
       ),
       secondaryBackground: Container(
         width: 40,
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
         child: Icon(
           Icons.archive,
           color: Colors.white,
@@ -143,7 +145,7 @@ class SingleTaskItem extends StatelessWidget {
               ? DismissDirection.endToStart
               : DismissDirection.horizontal,
       confirmDismiss: (direction) async {
-        return await showDialog<bool>(
+        return showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text('Are you sure !!'),
@@ -185,7 +187,7 @@ class SingleTaskItem extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 30,
-                backgroundColor: Theme.of(context).accentColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 child: Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Text(
@@ -202,9 +204,9 @@ class SingleTaskItem extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 6.0),
                 child: SizedBox(
                   width: 2.0,
-                  height: 38.0,
+                  height: 45.0,
                   child: Container(
-                    color: Colors.black54,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -240,8 +242,9 @@ class SingleTaskItem extends StatelessWidget {
 
 // no items yet in UI
 class NoTasks extends StatelessWidget {
+  final String? text;
   const NoTasks({
-    Key? key,
+    Key? key, this.text,
   }) : super(key: key);
 
   @override
@@ -257,8 +260,8 @@ class NoTasks extends StatelessWidget {
             color: Colors.black.withOpacity(0.6),
           ),
           SizedBox(height: 10.0),
-          Text(
-            'No Tasks Yet, Please Add Some',
+          Text( text == 'Tasks' ?
+            'No tasks yet, try to add some!' : 'No tasks yet',
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w600,
