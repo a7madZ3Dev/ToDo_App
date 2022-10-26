@@ -74,6 +74,7 @@ class Home extends StatelessWidget {
                         if (value!.trim().isEmpty) {
                           return 'title must not be empty';
                         }
+                        return null;
                       },
                       textInputAction: TextInputAction.none,
                       label: 'Task Title',
@@ -90,6 +91,7 @@ class Home extends StatelessWidget {
                         if (value!.trim().isEmpty) {
                           return 'date must not be empty';
                         }
+                        return null;
                       },
                       onTap: () async {
                         showDatePicker(
@@ -121,6 +123,7 @@ class Home extends StatelessWidget {
                         if (value!.trim().isEmpty) {
                           return 'time must not be empty';
                         }
+                        return null;
                       },
                       // textInputAction: TextInputAction.done,
                       // onSubmit: (_) {
